@@ -67,6 +67,7 @@ type Article struct {
 	Metadata    JSONB      `db:"metadata" json:"metadata,omitempty"`
 	Category    string 		`db:"category" json:"categoryType"`
 	Description *string    `db:"description" json:"description,omitempty"`
+	ImageURL    string     `json:"image_url,omitempty"`
 }
 
 type Perspective struct {
@@ -209,6 +210,13 @@ func GetArticleBySlug(db *sqlx.DB, slug string) (*ArticleWithPerspectives, error
 		return nil, err
 	}
 
+	// Extract image URL from metadata
+	if article.Metadata != nil {
+		if imageURL, ok := article.Metadata["image_url"].(string); ok {
+			article.ImageURL = imageURL
+		}
+	}
+
 	return &ArticleWithPerspectives{
 		Article:     article,
 		Category:    category,
@@ -267,6 +275,16 @@ func GetAllArticles(db *sqlx.DB, status string, categoryID *int64, limit, offset
 	if err != nil {
 		return nil, err
 	}
+
+	// Extract image URLs from metadata
+	for i := range articles {
+		if articles[i].Metadata != nil {
+			if imageURL, ok := articles[i].Metadata["image_url"].(string); ok {
+				articles[i].ImageURL = imageURL
+			}
+		}
+	}
+
 	return articles, nil
 }
 

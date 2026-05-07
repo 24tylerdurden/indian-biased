@@ -4,11 +4,12 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
+	"fmt"
+
 	"github.com/24tylerdurden/indian-biased/database"
 	"github.com/24tylerdurden/indian-biased/models"
-	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func GetArticles(c *gin.Context) {
@@ -39,6 +40,7 @@ func GetArticles(c *gin.Context) {
 
 	articles, err := models.GetAllArticles(database.DB, status, categoryID, limit, offset)
 	if err != nil {
+		fmt.Println("The err is : ", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch articles"})
 		return
 	}

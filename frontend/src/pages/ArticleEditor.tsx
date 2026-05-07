@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { articleApi, type Article, type Category } from '@/lib/api-articles';
+import { articleApi, type Category } from '@/lib/api-articles';
 import { ArrowLeft, Save, Eye, Plus, Trash2 } from 'lucide-react';
 
 interface PerspectiveInput {
@@ -36,6 +36,7 @@ export const ArticleEditor = () => {
     category_id: '',
     status: 'draft' as 'draft' | 'published',
     tags: [] as string[],
+    image_url: '',
   });
 
   const [categories, setCategories] = useState<Category[]>([]);
@@ -75,6 +76,7 @@ export const ArticleEditor = () => {
         category_id: data.category_id || '',
         status: data.status as 'draft' | 'published',
         tags: data.tags || [],
+        image_url: data.image_url || '',
       });
       // TODO: Load perspectives
     } catch (err) {
@@ -246,6 +248,16 @@ export const ArticleEditor = () => {
                   value={article.description}
                   onChange={(value) => setArticle({ ...article, description: value })}
                   placeholder="Write a brief description of the article..."
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="image_url">Image URL</Label>
+                <Input
+                  id="image_url"
+                  value={article.image_url}
+                  onChange={(e) => setArticle({ ...article, image_url: e.target.value })}
+                  placeholder="https://example.com/image.jpg"
                 />
               </div>
 

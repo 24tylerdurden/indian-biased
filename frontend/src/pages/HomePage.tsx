@@ -117,6 +117,13 @@ export const HomePage = () => {
                   className="lg:col-span-2 block group border-b lg:border-b-0 lg:border-r border-gray-900"
                 >
                   <div className="p-6 sm:p-8 h-full flex flex-col justify-between min-h-[320px] bg-white hover:bg-gray-50 transition-colors">
+                    {featuredArticle.image_url && (
+                      <img
+                        src={featuredArticle.image_url}
+                        alt={featuredArticle.topic}
+                        className="w-full h-48 object-cover rounded mb-4"
+                      />
+                    )}
                     <div>
                       {featuredArticle.categoryType && (
                         <span className="inline-block text-[10px] uppercase tracking-[0.25em] font-bold text-white bg-gray-900 px-2 py-0.5 mb-4">
@@ -172,11 +179,6 @@ export const HomePage = () => {
                         <span className="text-[9px] uppercase tracking-widest font-bold text-gray-500 mb-2 block">
                           {article.categoryType}
                         </span>
-                      )}
-                      {article.description && (
-                        <p className="text-gray-500 text-sm leading-relaxed mb-3">
-                          {truncateDescription(article.description, 30)}
-                        </p>
                       )}
                       <h3
                         className="text-base font-bold text-gray-900 leading-snug group-hover:underline decoration-1 underline-offset-2 mb-3 flex-1"

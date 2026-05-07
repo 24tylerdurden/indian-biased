@@ -36,7 +36,8 @@ export interface Article {
   tags?: string[];
   metadata?: Record<string, any>;
   categoryType?: string;
-  description?: string
+  description?: string;
+  image_url?: string;
 }
 
 export interface ArticleWithPerspectives extends Article {

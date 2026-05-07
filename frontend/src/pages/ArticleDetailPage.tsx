@@ -223,6 +223,14 @@ export const ArticleDetailPage = () => {
               {article.topic}
             </h1>
 
+            {article.image_url && (
+              <img
+                src={article.image_url}
+                alt={article.topic}
+                className="w-full h-auto rounded-lg mb-6 object-cover"
+              />
+            )}
+
             {article.description && (
               <div className="text-gray-600 leading-relaxed mb-6 prose-perspective">
                 <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.description) }} />
