@@ -1,12 +1,13 @@
-FROM node:20-alpine
-
+FROM node:18-slim AS builder
 WORKDIR /app
-
 COPY package*.json ./
-RUN npm install
-
+RUN npm ci
 COPY . .
+RUN npm run build          
 
-EXPOSE 5173
-
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+FROM node:18-slim
+WORKDIR /app
+RUN npm install -g serve   # lightweight static file server
+COPY --from=builder /app/dist ./dist
+EXPOSE 3000
+CMD ["serve", "-s", "dist", "-l", "3000"]
